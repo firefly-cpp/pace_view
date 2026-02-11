@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "pace_view"
+version = "0.1.0"
+description = "Contextualized AI trainer and visualization for cycling"
+authors = ["Sebastian Guertl", "Sebastian Pack"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sport-activities-features = "^0.5.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "pace_view"
+version = "0.1.0"
+description = "Contextualized AI trainer and visualization for cycling"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Sebastian Pack", email = "sebastian.pack@tugraz.at"}, {name = "Sebastian Guertl", email="sebastian.guertl@tugraz.at"}]
+dependencies = []

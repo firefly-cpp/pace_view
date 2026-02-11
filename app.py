@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, redirect
 from dash import Dash, html, dcc, Input, Output
 import plotly.express as px
 import os
-from packages.trendboard.trendboard.ASTTCXReader import ASTTCXReader
+from pace_view.ast_tcx_reader import ASTTCXReader
 
 def create_flask_server() -> Flask:
     server = Flask(__name__)

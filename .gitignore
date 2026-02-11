@@ -175,3 +175,4 @@ cython_debug/
 
 scripts/tcx_path
 data
+_data
