@@ -4,7 +4,8 @@ import dash
 import pandas as pd
 from dash import Dash, html, dcc, Input, Output
 from flask import Flask, redirect
-from pace_view.ast_tcx_reader import ASTTCXReader
+from pace_view.data_parsing import DataParser
+from pace_view.data_cleaning import DataCleaner
 
 def create_flask_server() -> Flask:
     server = Flask(__name__)
@@ -27,9 +28,11 @@ def create_dash_app(server: Flask) -> Dash:
     dirname = os.path.dirname(__file__)
     print(dirname)
     directory_name = os.path.join(dirname, 'data')    
-    reader = ASTTCXReader(directory_name)
+    parser = DataParser()
+    cleaner = DataCleaner()
+    exercises = parser.parse_tcx_directory(directory_name)
 
-    total_summary = reader.build_dashboard()
+    total_summary = cleaner.build_dashboard(exercises)
     # print(total_summary)
     # print(total_summary.head())
     # zone_cols = [f"z{k}_sec" for k in range(1, 6)]
@@ -73,7 +76,7 @@ def create_dash_app(server: Flask) -> Dash:
         return fig
 
     def themed_figures(period: str):
-        fig1, fig2, fig3, fig4 = reader.return_figures(total_summary, period)
+        fig1, fig2, fig3, fig4 = cleaner.return_figures(total_summary, period)
         return (
             apply_theme(fig1),
             apply_theme(fig2),
@@ -119,10 +122,10 @@ def create_dash_app(server: Flask) -> Dash:
                         children=[
                             html.Div(
                                 children=[
-                                    html.Div("AST Monitor AI", className="hero__eyebrow"),
-                                    html.H1("Training Intelligence Dashboard", className="hero__title"),
+                                    html.Div("PACE-VIEW", className="hero__eyebrow"),
+                                    html.H1("Physics-Augmented Contextual Explainer & Visual Interface for Endurance Workflows", className="hero__title"),
                                     html.P(
-                                        "A clean view of workload, efficiency, and intensity distribution across your recent rides.",
+                                        "A clean view of workload, efficiency, and intensity distribution across your rides.",
                                         className="hero__subtitle",
                                     ),
                                 ]
@@ -325,7 +328,7 @@ def create_dash_app(server: Flask) -> Dash:
                                         id="fig1",
                                         figure=fig1,
                                         config={"displayModeBar": False, "responsive": True},
-                                        style={"height": "100%", "minHeight": "380px"},
+                                        style={"height": "100%", "minHeight": "360px"},
                                     ),
                                 ],
                             ),
@@ -357,7 +360,7 @@ def create_dash_app(server: Flask) -> Dash:
                                         id="fig2",
                                         figure=fig2,
                                         config={"displayModeBar": False, "responsive": True},
-                                        style={"height": "100%", "minHeight": "320px"},
+                                        style={"height": "90%", "minHeight": "360px"},
                                     ),
                                 ],
                             ),
@@ -386,7 +389,7 @@ def create_dash_app(server: Flask) -> Dash:
             html.Div(
                 className="footer",
                 children=[
-                    html.Div("AST Monitor AI - Training intelligence dashboard", className="footer__text"),
+                    html.Div("PACE-VIEW - Physics-Augmented Contextual Explainer & Visual Interface for Endurance Workflows", className="footer__text"),
                 ],
             ),
         ],
@@ -455,7 +458,7 @@ def create_dash_app(server: Flask) -> Dash:
             active = "90"
 
         # period here only affects fig1, so any value is fine for fig2
-        _, fig2, _, _ = reader.return_figures(total_summary, "7D", window_days)
+        _, fig2, _, _ = cleaner.return_figures(total_summary, "7D", window_days)
 
         fig2 = apply_theme(fig2)
 

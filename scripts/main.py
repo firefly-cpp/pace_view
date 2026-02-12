@@ -1,4 +1,5 @@
-from pace_view.ast_tcx_reader import ASTTCXReader
+from pace_view.data_parsing import DataParser
+from pace_view.data_cleaning import DataCleaner
 import os
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -7,7 +8,9 @@ import matplotlib.dates as mdates
 #     # init tcx-reader
 # dirname = os.path.dirname(__file__)
 # directory_name = os.path.join(dirname, 'tcx_path')    
-# reader = ASTTCXReader(directory_name)
+# parser = DataParser()
+# cleaner = DataCleaner()
+# exercises = parser.parse_tcx_directory(directory_name)
 
 #     # calc average calories through multiple sessions
 #     # calories = reader.get_calory_average()
@@ -55,7 +58,10 @@ print(insight)
 # 4. Test reading
 dirname = os.path.dirname(__file__)
 directory_name = os.path.join(dirname, 'tcx_path')
-reader = ASTTCXReader(directory_name)
+parser = DataParser()
+cleaner = DataCleaner()
+exercises = parser.parse_tcx_directory(directory_name)
+total_summary = cleaner.build_dashboard(exercises)
 # Output: 
 # "Performance Gap: -15 Watts. 
 #  Primary Cause: Headwind (contributed -12W). 

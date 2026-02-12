@@ -232,12 +232,12 @@ body {
 }
 
 .graph-card {
-  min-height: 540px;
+  min-height: 620px;
   animation: riseIn 0.65s ease-out both;
 }
 
 .graph-card--tall {
-  min-height: 780px;
+  min-height: 900px;
 }
 
 .info-card {

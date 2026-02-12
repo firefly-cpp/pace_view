@@ -2,6 +2,8 @@
 Parsing utilities for TCX files and optional weather enrichment.
 """
 
+import os
+from tcxreader.tcxreader import TCXReader
 from sport_activities_features.tcx_manipulation import TCXFile
 from sport_activities_features import WeatherIdentification
 
@@ -14,6 +16,7 @@ class DataParser:
         self.api_key = weather_api_key
         self.time_delta = time_delta
         self.tcx_loader = TCXFile()
+        self.tcx_reader = TCXReader()
 
     def _get_val(self, item, keys):
         """
@@ -55,3 +58,22 @@ class DataParser:
             weather_data = [{"temp": 20, "wspd": 0, "wdir": 0, "hum": 20}] * len(act["timestamps"])
 
         return act, weather_data
+
+    def parse_tcx_file(self, filepath):
+        """
+        Parse a TCX file using tcxreader (for dashboard summaries).
+        """
+        return self.tcx_reader.read(filepath, null_value_handling=1)
+
+    def parse_tcx_directory(self, dir_path, read_limit=600):
+        """
+        Parse a folder of TCX files into a list of (start_time, exercise).
+        """
+        exercise_val = []
+        for idx, file in enumerate(os.listdir(dir_path)):
+            if file.endswith(".tcx"):
+                exercise = self.parse_tcx_file(os.path.join(dir_path, file))
+                exercise_val.append((exercise.start_time, exercise))
+            if idx >= read_limit:
+                break
+        return exercise_val
