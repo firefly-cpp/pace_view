@@ -25,3 +25,10 @@ readme = "README.md"
 requires-python = ">=3.9"
 authors = [{name = "Sebastian Pack", email = "sebastian.pack@tugraz.at"}, {name = "Sebastian Guertl", email="sebastian.guertl@tugraz.at"}]
 dependencies = []
+
+[project.optional-dependencies]
+docs = [
+  "sphinx",
+  "sphinx-rtd-theme",
+  "myst-parser"
+]
