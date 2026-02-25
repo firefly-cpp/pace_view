@@ -176,3 +176,5 @@ cython_debug/
 scripts/tcx_path
 data
 _data
+
+temp_mining_data.csv
