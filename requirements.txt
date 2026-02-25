@@ -34,6 +34,7 @@ packaging==26.0
 pandas==2.3.3
 pillow==12.1.1
 plotly==6.5.2
+pytest==9.0.2
 propcache==0.4.1
 Pygments==2.19.2
 pyparsing==3.3.2
