@@ -17,7 +17,9 @@
               {{ activity.start_label }}
             </p>
           </div>
-          <a href="/dash/" class="activity-back-link">Back to dashboard</a>
+          {% if show_back_link is not defined or show_back_link %}
+            <a href="/dash/" class="activity-back-link">Back to dashboard</a>
+          {% endif %}
         </div>
 
         <div class="card conclusion-card">

@@ -174,7 +174,9 @@ cython_debug/
 .pypirc
 
 examples/tcx_path
-data
+examples/data/history_cache.csv
+data/*
+!data/.gitkeep
 _data
 
 temp_mining_data.csv
