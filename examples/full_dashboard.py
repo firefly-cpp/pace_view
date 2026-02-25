@@ -14,6 +14,7 @@ import dash
 import pandas as pd
 from dash import Dash, html, dcc, Input, Output
 from flask import Flask, abort, redirect, render_template
+from pace_view.config import get_weather_api_key
 from pace_view.data_parsing import DataParser
 from pace_view.data_cleaning import DataCleaner
 
@@ -160,7 +161,10 @@ def initialize_context_pipeline(history_folder: str):
         return context_state
 
     try:
-        trainer = ContextTrainer(history_folder=history_folder)
+        trainer = ContextTrainer(
+            history_folder=history_folder,
+            weather_api_key=get_weather_api_key(),
+        )
         trainer.fit()
         pattern_report = trainer.mine_patterns()
 

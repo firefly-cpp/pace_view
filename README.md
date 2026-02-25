@@ -52,6 +52,12 @@ Install the requirements specified in `requirements.txt` and then execute
 python app.py
 ```
 
+## Run context trainer text-only example
+
+```
+python examples/context_trainer_text_example.py
+```
+
 ## Overview
 
 This repository provides a full workflow for cycling activity analysis:
@@ -120,7 +126,10 @@ If you want weather enrichment, provide an API key via environment variables:
 WEATHER_API_KEY=<your_key_here>
 ```
 
-Optional loading with `python-dotenv`:
+Examples using `ContextTrainer` now resolve the key centrally via `pace_view.config.get_weather_api_key()`.
+It checks the process environment first and also loads a project-root `.env` file if present.
+
+Optional manual loading with `python-dotenv`:
 
 ```
 from dotenv import load_dotenv

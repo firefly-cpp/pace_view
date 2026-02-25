@@ -26,6 +26,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from pace_view.data_cleaning import DataCleaner
+from pace_view.config import get_weather_api_key
 from pace_view.data_parsing import DataParser
 
 LOGGER = logging.getLogger(__name__)
@@ -91,7 +92,10 @@ def initialize_context_pipeline(history_folder: str):
         return context_state
 
     try:
-        trainer = ContextTrainer(history_folder=history_folder)
+        trainer = ContextTrainer(
+            history_folder=history_folder,
+            weather_api_key=get_weather_api_key(),
+        )
         trainer.fit()
         pattern_report = trainer.mine_patterns()
         context_state["trainer"] = trainer

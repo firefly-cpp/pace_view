@@ -19,6 +19,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from pace_view.core import ContextTrainer
+from pace_view.config import get_weather_api_key
 
 
 def print_section(title: str):
@@ -89,15 +90,18 @@ def main():
         raise FileNotFoundError(f"History folder not found: {history_folder}")
 
     target_file = resolve_target_file(history_folder, args.target_file)
+    weather_api_key = args.weather_api_key or get_weather_api_key()
+    weather_key_source = "cli" if args.weather_api_key else ("env/.env" if weather_api_key else "none")
 
     print_section("Configuration")
     print(f"History folder: {history_folder}")
     print(f"Target file: {target_file}")
-    print(f"Weather API key set: {'yes' if args.weather_api_key else 'no'}")
+    print(f"Weather API key set: {'yes' if weather_api_key else 'no'}")
+    print(f"Weather API key source: {weather_key_source}")
 
     trainer = ContextTrainer(
         history_folder=history_folder,
-        weather_api_key=args.weather_api_key,
+        weather_api_key=weather_api_key,
         time_delta=args.time_delta,
     )
 
