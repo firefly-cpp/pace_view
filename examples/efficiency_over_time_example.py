@@ -120,4 +120,4 @@ def update_trend_window(_input_90, _input_180, _input_365):
 
 if __name__ == "__main__":
     # Dedicated port so this example can run alongside other examples.
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="127.0.0.1", port=5001, debug=True)

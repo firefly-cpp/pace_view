@@ -838,4 +838,4 @@ server = create_flask_server()
 dash_app = create_dash_app(server)
 
 if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=5000, debug=True)
+    server.run(host="127.0.0.1", port=5000, debug=True)

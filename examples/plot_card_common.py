@@ -12,7 +12,7 @@ import sys
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR))
-ASSETS_DIR = os.path.join(PROJECT_ROOT, "assets")
+ASSETS_DIR = os.path.join(PROJECT_ROOT, "..", "assets")
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 
 if PROJECT_ROOT not in sys.path:
