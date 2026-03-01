@@ -39,24 +39,6 @@ poetry build
 python setup.py build
 ```
 
-To install PACE-VIEW on Fedora Linux, please use:
-
-```
-dnf install python3-pace_view
-```
-
-To install PACE-VIEW on Alpine Linux, please use:
-
-```
-apk add py3-pace_view
-```
-
-To install PACE-VIEW on Arch Linux:
-
-```
-yay -Syyu python-pace_view
-```
-
 ## ✨ Implemented Components
 ![PACE-VIEW architecture](.github/img/architecture.png)
 
