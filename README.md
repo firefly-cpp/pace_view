@@ -192,4 +192,12 @@ Development of the Artificial Sport Trainer. Applied Sciences, 11(23), 11452.
 DOI: [10.3390/app112311452](https://doi.org/10.3390/app112311452)
 
 ## 🫂 Contributors
-TODO
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
