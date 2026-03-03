@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "pace_view"
 version = "0.1.0"
-description = "Contextualized AI trainer and visualization for cycling"
-authors = ["Sebastian Guertl", "Sebastian Pack"]
+description = "Explainable Cycling Intelligence Dashboard"
+authors = ["Sebastian Guertl", "Sebastian Pack", "Iztok Fister Jr.", "Andreas Holzinger"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -24,10 +24,10 @@ build-backend = "poetry.core.masonry.api"
 [project]
 name = "pace_view"
 version = "0.1.0"
-description = "Contextualized AI trainer and visualization for cycling"
+description = "Explainable Cycling Intelligence Dashboard"
 readme = "README.md"
-requires-python = ">=3.9"
-authors = [{name = "Sebastian Pack", email = "sebastian.pack@tugraz.at"}, {name = "Sebastian Guertl", email="sebastian.guertl@tugraz.at"}]
+requires-python = ">=3.8"
+authors = [{name = "Sebastian Pack", email = "sebastian.pack@tugraz.at"}, {name = "Sebastian Guertl", email="sebastian.guertl@tugraz.at"}, {name = "Iztok Fister Jr.", email="iztok@iztok-jr-fister.eu"}, {name = "Andreas Holzinger", email="andreas.holzinger@human-centered.ai"}]
 dependencies = []
 
 [project.optional-dependencies]
