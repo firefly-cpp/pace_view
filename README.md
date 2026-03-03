@@ -56,7 +56,6 @@ In case you want to install directly from the source code, use:
 git clone https://github.com/firefly-cpp/pace_view.git
 cd pace_view
 poetry build
-python setup.py build
 ```
 
 ## ✨ Implemented Components
