@@ -50,7 +50,7 @@ To install from source:
 ✨ Implemented Components
 -------------------------
 
-.. image:: .github/img/architecture.png
+.. image:: https://raw.githubusercontent.com/firefly-cpp/pace_view/refs/heads/main/.github/img/architecture.png
    :alt: PACE-VIEW architecture
    :align: center
 
@@ -261,4 +261,5 @@ arXiv preprint: https://arxiv.org/abs/2109.13334
 Fister Jr, I., Salcedo-Sanz, S., Iglesias, A., Fister, D., Gálvez, A., & Fister, I. (2021).  
 *New Perspectives in the Development of the Artificial Sport Trainer.*  
 Applied Sciences, 11(23), 11452.  
+
 DOI: https://doi.org/10.3390/app112311452  
