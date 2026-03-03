@@ -12,23 +12,6 @@ It combines physics-informed modeling, digital-twin prediction, and explainable 
 - **Physics + ML pipeline**: Quantify wind/terrain/environmental load and compare expected vs observed physiology.
 - **Modular architecture**: Run the full web app or use components independently in scripts.
 
-↗️ Quick Start
---------------
-
-Run the full dashboard:
-
-.. code-block:: bash
-
-   python examples/full_dashboard.py
-
-Then open an activity to view detailed explanations and decision-support outputs.
-
-- **Free software**: MIT license  
-- **Python versions**: 3.8.x, 3.9.x, 3.10.x, 3.11.x, 3.12.x  
-- **Documentation**: https://pace-view.readthedocs.io/en/latest/  
-- **Tested OS**: Windows, Ubuntu, Fedora, Alpine, Arch, macOS  
-  (This does not imply it will not work on others.)
-
 📦 Installation
 ---------------
 
@@ -46,6 +29,23 @@ To install from source:
    cd pace_view
    poetry build
    python setup.py build
+
+↗️ Quick Start
+--------------
+
+Run the full dashboard:
+
+.. code-block:: bash
+
+   python examples/full_dashboard.py
+
+Then open an activity to view detailed explanations and decision-support outputs.
+
+- **Free software**: MIT license  
+- **Python versions**: 3.8.x, 3.9.x, 3.10.x, 3.11.x, 3.12.x  
+- **Documentation**: https://pace-view.readthedocs.io/en/latest/  
+- **Tested OS**: Windows, Ubuntu, Fedora, Alpine, Arch, macOS  
+  (This does not imply it will not work on others.)
 
 ✨ Implemented Components
 -------------------------
