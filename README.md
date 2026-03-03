@@ -9,7 +9,6 @@
   <img alt="Fedora package" src="https://img.shields.io/fedora/v/python3-pace-view?color=blue&label=Fedora%20Linux&logo=fedora" href="https://src.fedoraproject.org/rpms/python-pace-view">
   <img alt="AUR package" src="https://img.shields.io/aur/version/python-pace-view?color=blue&label=Arch%20Linux&logo=arch-linux" href="https://aur.archlinux.org/packages/python-pace-view">
   <img alt="Packaging status" src="https://repology.org/badge/tiny-repos/python:pace-view.svg" href="https://repology.org/project/python:pace-view/versions">
-  <img alt="Downloads" src="https://pepy.tech/badge/pace-view" href="https://pepy.tech/project/pace-view">
   <img alt="GitHub license" src="https://img.shields.io/github/license/firefly-cpp/pace-view.svg" href="https://github.com/firefly-cpp/pace-view/blob/master/LICENSE">
   <img alt="Documentation Status" src="https://readthedocs.org/projects/pace-view/badge/?version=latest" href="https://pace-view.readthedocs.io/en/latest/?badge=latest">
 </p>
@@ -19,7 +18,6 @@
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/firefly-cpp/pace-view.svg">
   <img alt="Average time to resolve an issue" src="http://isitmaintained.com/badge/resolution/firefly-cpp/pace-view.svg" href="http://isitmaintained.com/project/firefly-cpp/pace-view">
   <img alt="Percentage of issues still open" src="http://isitmaintained.com/badge/open/firefly-cpp/pace-view.svg" href="http://isitmaintained.com/project/firefly-cpp/pace-view">
-  <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-6-orange.svg" href="#-contributors">
 </p>
 
 PACE-VIEW turns raw TCX rides into decision-ready insights for athletes and coaches.  
