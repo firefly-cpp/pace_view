@@ -31,7 +31,7 @@ class DataCleaner:
         if self.parser is None:
             raise ValueError("DataCleaner requires a DataParser instance for weather-aligned dataframes.")
         temps = [self.parser._get_val(w, ["temp", "temperature"]) for w in weather_data]
-        hums = [self.parser._get_val(w, ["hum", "humidity"]) for w in weather_data]
+        hums = [self.parser._get_val(w, ["hum", "humidity", "relative_humidity"]) for w in weather_data]
         winds = [self.parser._get_val(w, ["wspd", "wind_speed"]) for w in weather_data]
         bearings = [self.parser._get_val(w, ["wdir", "wind_direction"]) for w in weather_data]
 
@@ -47,11 +47,12 @@ class DataCleaner:
                 "ele": act["altitudes"][:min_len],
                 "dist": act["distances"][:min_len],
                 "hr": hr_numeric[:min_len],
-                "speed_mps": speed_numeric[:min_len] / 3.6,
+                "speed_mps": pd.Series(speed_numeric[:min_len] / 3.6).mask(lambda s: s > 25).interpolate(limit_direction="both").to_numpy(),
                 "temp": temps[:min_len],
                 "wind_speed_mps": np.array(winds[:min_len]) / 3.6,
                 "wind_dir": bearings[:min_len],
                 "hum": hums[:min_len],
+                "weather_imputed": [isinstance(w, dict) and w.get("imputed", False) for w in weather_data][:min_len],
             }
         )
 
@@ -131,7 +132,7 @@ class DataCleaner:
         x = self.hrr_intensity(h_r, config).clip(lower=0, upper=1.2)
         bounds = np.array(config.h_r_r_bound)
         z = np.digitize(x, bounds, right=True).clip(1, 5)
-        return pd.Series(z, index=h_r.index)
+        return pd.Series(z, index=h_r.index).where(h_r.notna(), 0)
 
     def time_in_zones(self, df: pd.DataFrame, config: AthleteConfig) -> dict:
         z = self.assign_zones_hrr(df["h_r"], config)

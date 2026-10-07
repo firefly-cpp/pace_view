@@ -3,6 +3,8 @@ Parsing utilities for TCX files and optional weather enrichment.
 """
 
 import os
+import numpy as np
+import pandas as pd
 from tcxreader.tcxreader import TCXReader
 from sport_activities_features.tcx_manipulation import TCXFile
 from sport_activities_features import WeatherIdentification
@@ -12,7 +14,7 @@ class DataParser:
     """
     Loads raw TCX data and fetches weather context (if configured).
     """
-    def __init__(self, weather_api_key=None, time_delta=1):
+    def __init__(self, weather_api_key=None, time_delta=60):
         self.api_key = weather_api_key
         self.time_delta = time_delta
         self.tcx_loader = TCXFile()
@@ -45,17 +47,24 @@ class DataParser:
             print(f"Error reading {filepath}: {e}")
             return None
 
-        weather_data = []
-        if self.api_key and not is_training:
+        weather_data = None
+        cache_file = str(filepath) + ".weather.csv"
+        if os.path.exists(cache_file):
+            weather_data = pd.read_csv(cache_file).to_dict("records")
+        elif self.api_key:
             try:
-                wid = WeatherIdentification(act["positions"], act["timestamps"], self.api_key)
+                # approx. 1 km precision for the weather
+                positions = np.round(act["positions"], 2)
+                wid = WeatherIdentification(positions, act["timestamps"], self.api_key)
                 w_list = wid.get_weather(time_delta=self.time_delta)
-                weather_data = wid.get_average_weather_data(act["timestamps"], w_list)
+                averaged = wid.get_average_weather_data(act["timestamps"], w_list)
+                weather_data = [{"temp": w.temperature, "hum": w.relative_humidity,
+                                "wspd": w.wind_speed, "wdir": w.wind_direction} for w in averaged]
+                pd.DataFrame(weather_data).round(2).to_csv(cache_file, index=False)
             except Exception as e:
-                print(f"Weather API Error: {e}. Using Neutral weather.")
-                weather_data = [{"temp": 20, "wspd": 0, "wdir": 0, "hum": 20}] * len(act["timestamps"])
-        else:
-            weather_data = [{"temp": 20, "wspd": 0, "wdir": 0, "hum": 20}] * len(act["timestamps"])
+                print(f"Weather API Error for {filepath}: {e}. Using neutral weather (flagged as imputed).")
+        if weather_data is None:
+            weather_data = [{"temp": 20, "wspd": 0, "wdir": 0, "hum": 20, "imputed": True}] * len(act["timestamps"])
 
         return act, weather_data
 

@@ -666,11 +666,11 @@ def create_dash_app(server: Flask) -> Dash:
                                                             html.Div(
                                                                 className="zone-legend",
                                                                 children=[
-                                                                    html.Span("Z1 <=50%", className="zone-legend__item"),
-                                                                    html.Span("Z2 50-60%", className="zone-legend__item"),
-                                                                    html.Span("Z3 60-70%", className="zone-legend__item"),
-                                                                    html.Span("Z4 70-80%", className="zone-legend__item"),
-                                                                    html.Span("Z5 >=80%", className="zone-legend__item"),
+                                                                    html.Span("Z1 <=60%", className="zone-legend__item"),
+                                                                    html.Span("Z2 60-70%", className="zone-legend__item"),
+                                                                    html.Span("Z3 70-80%", className="zone-legend__item"),
+                                                                    html.Span("Z4 80-90%", className="zone-legend__item"),
+                                                                    html.Span("Z5 >90%", className="zone-legend__item"),
                                                                 ],
                                                             ),
                                                         ],

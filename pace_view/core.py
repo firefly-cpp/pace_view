@@ -17,11 +17,11 @@ class ContextTrainer:
     """
     High-level API that ties parsing, physics, digital twin, and XAI together.
     """
-    def __init__(self, history_folder, weather_api_key=None, time_delta=1):
+    def __init__(self, history_folder, weather_api_key=None, time_delta=60, physics_params=None):
         self.history_folder = history_folder
         self.parser = DataParser(weather_api_key=weather_api_key, time_delta=time_delta)
         self.cleaner = DataCleaner(self.parser)
-        self.engine = PhysicsEngine()
+        self.engine = PhysicsEngine(**(physics_params or {}))
         self.model = DigitalTwinModel()
         self.counterfactual = CounterfactualAnalyzer(self.model)
         self.rationale = RationaleGenerator()
@@ -37,6 +37,7 @@ class ContextTrainer:
 
         act, weather_data = parsed
         df = self.cleaner.to_dataframe(act, weather_data)
+        df["ride_id"] = os.path.basename(filepath)
 
         return self.engine.calculate_virtual_power(df)
 
@@ -47,6 +48,7 @@ class ContextTrainer:
         print(f"Loading history from {self.history_folder}...")
         files = [f for f in os.listdir(self.history_folder) if f.endswith('.tcx')]
         dfs = []
+        self.failed_files = []
         for i, f in enumerate(files):
             try:
                 path = os.path.join(self.history_folder, f)
@@ -54,14 +56,17 @@ class ContextTrainer:
                 if df is not None and len(df) > 0:
                     dfs.append(df)
                 if i % 10 == 0: print(f"  Processed {i}/{len(files)} activities...")
-            except: pass 
+            except Exception as e:
+                print(f"  Skipping {f}: {e}")
+                self.failed_files.append(f)
 
         if not dfs: raise Exception("No valid TCX files found.")
 
         print("Training Physiological Model...")
         full_history = pd.concat(dfs, ignore_index=True)
         score = self.model.train(full_history)
-        print(f"Model Trained! Accuracy (R2): {score:.2f}")
+        self.history = full_history
+        print(f"Model trained. In-sample R2 (training data, not a validation score): {score:.2f}")
         
         print("Caching history for pattern mining...")
         
@@ -70,6 +75,8 @@ class ContextTrainer:
         cache_path = os.path.join(self.history_folder, "history_cache.csv") # Save cached history for pattern mining
         full_history_analyzed.to_csv(cache_path, index=False)
         print(f"History cache saved to: {cache_path}")
+
+    def evaluate(self): return self.model.evaluate(self.history)
 
     def mine_patterns(self):
         """

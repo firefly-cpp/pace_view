@@ -182,3 +182,5 @@ data/*
 _data
 
 temp_mining_data.csv
+
+*.weather.csv

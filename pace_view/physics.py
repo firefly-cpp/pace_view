@@ -10,11 +10,12 @@ class PhysicsEngine:
     """
     Computes virtual power and related physics signals from ride data.
     """
-    def __init__(self, rider_mass=75, bike_mass=10):
+    def __init__(self, rider_mass=75, bike_mass=10, cd_a=0.32, crr=0.005, rho=1.225):
         self.mass = rider_mass + bike_mass
         self.g = 9.81
-        self.rho = 1.225
-        self.cd_a = 0.32
+        self.rho = rho
+        self.cd_a = cd_a
+        self.crr = crr
 
     def calculate_virtual_power(self, df):
         """
@@ -46,7 +47,7 @@ class PhysicsEngine:
         p_grav = self.mass * self.g * np.sin(np.arctan(df["grad"])) * df["speed_mps"]  # Gravitational power
 
         p_roll = (
-            self.mass * self.g * 0.005 * np.cos(np.arctan(df["grad"])) * df["speed_mps"]
+            self.mass * self.g * self.crr * np.cos(np.arctan(df["grad"])) * df["speed_mps"]
         )  # Rolling resistance coefficient
 
         df["p_aero"] = p_aero

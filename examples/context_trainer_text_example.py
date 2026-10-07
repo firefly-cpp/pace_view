@@ -77,7 +77,7 @@ def parse_args():
     parser.add_argument(
         "--time-delta",
         type=int,
-        default=1,
+        default=60,
         help="Weather sampling delta used by DataParser.",
     )
     return parser.parse_args()

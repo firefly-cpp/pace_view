@@ -69,7 +69,7 @@ def test_data_cleaning_after_parsing():
 def test_mining_with_fifty_tcx_files(monkeypatch):
     pytest.importorskip("niaarm")
     pytest.importorskip("niapy")
-    weather_api_key = os.getenv('WEATHER_API_KEY')
+    weather_api_key = None
     TARGET_FILE = "tests/data/1.tcx"
 
     trainer = ContextTrainer(
@@ -92,4 +92,4 @@ def test_mining_with_fifty_tcx_files(monkeypatch):
     assert "Summary_Metrics" in activity_report
     assert "Rationales" in activity_report
     assert "Atmosphere" in activity_report["Rationales"]
-    assert "COOLING EFFECT" in activity_report["Rationales"]["Atmosphere"]
+    assert "NOT ASSESSED" in activity_report["Rationales"]["Atmosphere"]

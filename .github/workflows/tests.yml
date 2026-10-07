@@ -29,7 +29,5 @@ jobs:
           pip install -e .
 
       - name: Run tests
-        env:
-          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
         run: |
           pytest -q

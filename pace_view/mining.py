@@ -12,8 +12,10 @@ class PatternMiner:
     """
     Mines human-readable rules that explain performance patterns.
     """
-    def __init__(self):
-        pass
+    def __init__(self, population_size=50, max_iters=50, seed=None):
+        self.population_size = population_size
+        self.max_iters = max_iters
+        self.seed = seed
 
     def _discretize(self, df):
         """
@@ -37,7 +39,8 @@ class PatternMiner:
         else:
             data["Status"] = "Normal"
 
-        return data.dropna()
+        data = data.dropna()
+        return data.loc[:, data.nunique() > 1]
 
     def _summarize_rules(self, rules):
         """
@@ -92,9 +95,10 @@ class PatternMiner:
 
             # 3. Configure algorithm (Differential Evolution)
             algo = DifferentialEvolution(
-                population_size=50,
+                population_size=self.population_size,
                 differential_weight=0.5,
                 crossover_probability=0.9,
+                seed=self.seed,
             )
 
             # 4. Run mining
@@ -102,19 +106,16 @@ class PatternMiner:
                 dataset,
                 algo,
                 metrics=("support", "confidence"),
-                max_iters=50,
+                max_iters=self.max_iters,
                 logging=False,
             )
 
             # 5. Filter for "Struggling" rules
             interesting_patterns = []
             for rule in rules:
-                rule_str = str(rule)
-
                 # Check if this rule explains why we are struggling
-                if "Struggling" in rule_str and "THEN" in rule_str:
-                    if rule_str.split("THEN")[1].find("Struggling") != -1:  # Verify consequent
-                        interesting_patterns.append(rule_str)
+                if "Struggling" in str(rule.consequent):
+                    interesting_patterns.append(str(rule))
 
             return self._summarize_rules(interesting_patterns)
 

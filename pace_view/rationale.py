@@ -2,6 +2,7 @@
 Human-readable explanations built from counterfactual signals.
 """
 
+import pandas as pd
 
 class RationaleGenerator:
     """
@@ -49,18 +50,20 @@ class RationaleGenerator:
         else:
             rationales["Terrain"] = "NEUTRAL: Terrain was mostly flat/rolling."
 
-        # 3. Thermal rationale (physiological)
-        avg_thermal_penalty = df["env_penalty_bpm"].mean()
-        if avg_thermal_penalty > self.heat_penalty_bpm:
+        # 3. Thermal rationale (temperature/humidity part of the scenario comparison only)
+        avg_thermal_penalty = df["env_penalty_thermal_bpm"].mean()
+        if pd.isna(avg_thermal_penalty):
+            rationales["Atmosphere"] = "NOT ASSESSED: No observed weather data."
+        elif avg_thermal_penalty > self.heat_penalty_bpm:
             rationales["Atmosphere"] = (
-                f"HEAT STRESS: High Temp/Humidity raised HR by {avg_thermal_penalty:.1f} bpm."
+                f"HEAT STRESS: Model attributes +{avg_thermal_penalty:.1f} bpm to temperature/humidity vs. reference conditions."
             )
         elif avg_thermal_penalty < -self.heat_penalty_bpm:
             rationales["Atmosphere"] = (
-                f"COOLING EFFECT: Low Temps lowered HR by {abs(avg_thermal_penalty):.1f} bpm."
+                f"COOLING EFFECT: Model attributes {avg_thermal_penalty:.1f} bpm to temperature/humidity vs. reference conditions."
             )
         else:
-            rationales["Atmosphere"] = "NEUTRAL: Optimal temperatures."
+            rationales["Atmosphere"] = "NEUTRAL: Temperature/humidity effect within 3 bpm of reference conditions."
 
         return rationales
 
@@ -84,7 +87,7 @@ class RationaleGenerator:
             if "NEGATIVE" in value or "HIGH" in value or "STRESS" in value:
                 factors.append(value)
         if not factors:
-            return "Perfect Conditions. Performance reflects raw fitness."
+            return "No adverse conditions flagged by the rule-based checks."
         return " | ".join(factors)
 
     def build_report(self, df):
