@@ -23,7 +23,7 @@
         </div>
 
         <div class="card conclusion-card">
-          <div class="conclusion-card__eyebrow">Digital Twin Conclusion</div>
+          <div class="conclusion-card__eyebrow">Conclusion</div>
           <p class="conclusion-card__text">{{ activity.explanation }}</p>
           {% if activity.context_error %}
             <p class="activity-notice">{{ activity.context_error }}</p>
@@ -76,7 +76,7 @@
 
           <div class="card activity-detail-card">
             <div class="card__header">
-              <h3 class="card__title">Digital Twin Metrics</h3>
+              <h3 class="card__title">HR Model Metrics</h3>
             </div>
             {% if activity.summary_metrics %}
               <div class="activity-stack">
@@ -88,7 +88,7 @@
                 {% endfor %}
               </div>
             {% else %}
-              <p class="activity-notice">No digital twin metrics were produced for this activity.</p>
+              <p class="activity-notice">No HR model metrics were produced for this activity.</p>
             {% endif %}
           </div>
         </div>
