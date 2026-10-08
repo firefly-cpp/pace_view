@@ -54,7 +54,7 @@ python examples/full_dashboard.py
 Then open an activity to view detailed explanations and decision-support outputs.
 
 - **Free software**: MIT license
-- **Python versions**: 3.8.x, 3.9.x, 3.10.x, 3.11.x, 3.12.x
+- **Python versions**: 3.11.x, 3.12.x
 - **Documentation**: [https://pace-view.readthedocs.io/en/latest/](https://pace-view.readthedocs.io/en/latest/)
 - **Tested** OS: Windows, Ubuntu, Fedora, Alpine, Arch, macOS. **However, that does not mean it does not work on others**
 
@@ -121,8 +121,8 @@ Run these from the repository root:
 1. Parse TCX -> activity arrays + weather
 2. Clean + align -> dataframe
 3. Physics features -> headwind, gradient, virtual power
-4. Digital twin -> predicted HR and drift
-5. Counterfactual + rationale -> explanation output
+4. Heart-rate model (Random Forest) -> predicted HR and drift
+5. Scenario comparison + rationale -> explanation output
 6. Pattern mining -> global rules across rides
 
 ## Testing
@@ -182,7 +182,7 @@ This heatmap highlights how average heart rate changes across combinations of ri
 
 ### Single-activity explanation page
 ![PACE-VIEW single activity explanation page](.github/img/pace-view-single-activity.png)
-The activity detail page brings together the digital twin conclusion, session metrics, and rationale cards that explain why a ride felt the way it did.
+The activity detail page brings together the heart-rate modelling conclusion, session metrics, and rationale cards that explain why a ride felt the way it did.
 
 
 ## 🔑 License
